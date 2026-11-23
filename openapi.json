@@ -1,0 +1,1023 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Yemeksepeti API",
+    "version": "2026-09-22",
+    "description": "Discover restaurants, browse menus and prices on Yemeksepeti — Turkey's Delivery Hero food-delivery platform.\n\nEvery request needs an API key in the `Authorization: Bearer <key>` header. Create one at https://maviapi.com/dashboard/keys. A successful request uses one credit, unless its operation says more (`x-credits`). That price covers 200 rows (or the operation's `x-credits-rows`); a request that returns more pays it again for each further page of that many rows. The `x-maviapi-credits` response header says what a request cost.\n\nEndpoint reference with live examples: https://maviapi.com/apis/yemeksepeti",
+    "termsOfService": "https://maviapi.com/terms"
+  },
+  "externalDocs": {
+    "description": "API page",
+    "url": "https://maviapi.com/apis/yemeksepeti"
+  },
+  "servers": [
+    {
+      "url": "https://api.maviapi.com/v1/sites/yemeksepeti"
+    }
+  ],
+  "security": [
+    {
+      "maviapiKey": []
+    }
+  ],
+  "paths": {
+    "/explore": {
+      "get": {
+        "operationId": "explore",
+        "summary": "Explore (restaurants + menus)",
+        "description": "Discover restaurants for a location and optionally attach the top results' full menus in one call.",
+        "x-credits": 1,
+        "parameters": [
+          {
+            "name": "city",
+            "in": "query",
+            "required": false,
+            "description": "City to deliver to (ignored if lat/lng are given).",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "istanbul",
+                "ankara",
+                "izmir",
+                "bursa",
+                "antalya",
+                "adana",
+                "gaziantep",
+                "konya"
+              ],
+              "default": "istanbul"
+            },
+            "example": "istanbul"
+          },
+          {
+            "name": "lat",
+            "in": "query",
+            "required": false,
+            "description": "Latitude (overrides city).",
+            "schema": {
+              "type": "number"
+            },
+            "example": 41.0082
+          },
+          {
+            "name": "lng",
+            "in": "query",
+            "required": false,
+            "description": "Longitude (overrides city).",
+            "schema": {
+              "type": "number"
+            },
+            "example": 28.9784
+          },
+          {
+            "name": "cuisine",
+            "in": "query",
+            "required": false,
+            "description": "Filter by cuisine: a numeric cuisine id or a name (e.g. 'Burger', 'Pizza'). See available_cuisines in the response for valid values.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Burger"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "description": "Sort order for the results.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "",
+                "rating",
+                "delivery_time",
+                "distance",
+                "minimum_order_amount"
+              ]
+            },
+            "example": "rating"
+          },
+          {
+            "name": "menu",
+            "in": "query",
+            "required": false,
+            "description": "Attach the full menu to the top results.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "example": true
+          },
+          {
+            "name": "menuCount",
+            "in": "query",
+            "required": false,
+            "description": "How many top restaurants to enrich with their menu (max 3).",
+            "schema": {
+              "type": "integer",
+              "enum": [
+                1,
+                2,
+                3
+              ],
+              "default": 2
+            },
+            "example": 2
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 30
+            },
+            "example": 30
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            },
+            "example": 0
+          },
+          {
+            "name": "refresh",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "example": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The data, as JSON.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "restaurants": {
+                          "type": [
+                            "array",
+                            "null"
+                          ],
+                          "items": {
+                            "type": "object",
+                            "example": {
+                              "code": "frtm",
+                              "id": 272240,
+                              "name": "Helvacı Ali",
+                              "rating": 3.9,
+                              "review_count": 205,
+                              "cuisines": [
+                                "Tatlı"
+                              ],
+                              "primary_cuisine": "Tatlı",
+                              "budget": 1,
+                              "address": "Hasfırın Cd. 13/B",
+                              "city": "Istanbul",
+                              "latitude": 41.043,
+                              "longitude": 29.006,
+                              "distance_km": 3.862,
+                              "minimum_order_amount": 0,
+                              "delivery_fee": 0,
+                              "delivery_time_minutes": 30,
+                              "currency": "TRY",
+                              "is_delivery_available": true,
+                              "is_pickup_available": false,
+                              "is_open": true,
+                              "has_online_payment": false,
+                              "has_discount": true,
+                              "logo": null,
+                              "hero_image": "https://images.deliveryhero.io/image/fd-tr/LH/frtm-listing.jpg",
+                              "url": "https://www.yemeksepeti.com/restaurant/frtm/helvaci-ali-frtm",
+                              "menu": {
+                                "code": "frtm",
+                                "category_count": 7,
+                                "product_count": 56,
+                                "categories": [
+                                  {
+                                    "id": "6033167",
+                                    "name": "Ambalajlı Ürünler",
+                                    "description": null,
+                                    "product_count": 4,
+                                    "products": [
+                                      {
+                                        "id": "73934913",
+                                        "name": "Kestane Şekeri (500 gr.)",
+                                        "description": "500 gr. olarak servis edilir.",
+                                        "image": "https://images.deliveryhero.io/image/fd-tr/Products/73934913.jpg",
+                                        "price": 740,
+                                        "discounted_price": 592,
+                                        "is_sold_out": false
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "total": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ],
+                          "example": 2285
+                        },
+                        "count": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ],
+                          "example": 30
+                        },
+                        "location": {
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "example": {
+                            "latitude": 41.0082,
+                            "longitude": 28.9784,
+                            "city": "istanbul"
+                          }
+                        },
+                        "cuisine_filter": {
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "example": {
+                            "input": "Pizza",
+                            "resolved_id": "1064"
+                          }
+                        },
+                        "sort": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "example": null
+                        },
+                        "menu_enriched": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ],
+                          "description": "How many top results had their menu attached.",
+                          "example": 2
+                        }
+                      }
+                    },
+                    "cached": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ],
+                      "example": false
+                    },
+                    "source": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "example": "yemeksepeti:combo"
+                    },
+                    "pagination": {
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "total": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ],
+                          "example": 60
+                        },
+                        "limit": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ],
+                          "example": 30
+                        },
+                        "offset": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ],
+                          "example": 0
+                        },
+                        "count": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ],
+                          "example": 30
+                        },
+                        "has_more": {
+                          "type": [
+                            "boolean",
+                            "null"
+                          ],
+                          "example": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/CreditLimitReached"
+          },
+          "403": {
+            "$ref": "#/components/responses/AccountSuspended"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          },
+          "502": {
+            "$ref": "#/components/responses/UpstreamFailed"
+          }
+        }
+      }
+    },
+    "/restaurant/{code}": {
+      "get": {
+        "operationId": "restaurantCode",
+        "summary": "Restaurant menu",
+        "description": "Full menu of one restaurant by vendor code: categories, products, descriptions, images and prices (TRY, incl. discounts).\n\nEach successful request uses 10 credits.",
+        "x-credits": 10,
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "description": "Restaurant vendor code (the `code` field from /restaurants, e.g. 'frtm'). Path parameter.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "frtm"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Max categories per page.",
+            "schema": {
+              "type": "integer",
+              "default": 200
+            },
+            "example": 200
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            },
+            "example": 0
+          },
+          {
+            "name": "refresh",
+            "in": "query",
+            "required": false,
+            "description": "Bypass and repopulate the cache.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "example": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The data, as JSON.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "example": "frtm"
+                        },
+                        "name": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "example": "Helvacı Ali"
+                        },
+                        "menu_name": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "example": "Ana Menü"
+                        },
+                        "hours": {
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "example": {
+                            "start": "10:30:00",
+                            "end": "23:30:00"
+                          }
+                        },
+                        "currency": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "example": "TRY"
+                        },
+                        "category_count": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ],
+                          "example": 7
+                        },
+                        "product_count": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ],
+                          "example": 56
+                        },
+                        "categories": {
+                          "type": [
+                            "array",
+                            "null"
+                          ],
+                          "items": {
+                            "type": "object",
+                            "example": {
+                              "id": "6033167",
+                              "name": "Ambalajlı Ürünler",
+                              "description": null,
+                              "product_count": 4,
+                              "products": [
+                                {
+                                  "id": "73934913",
+                                  "name": "Kestane Şekeri (500 gr.)",
+                                  "description": "500 gr. olarak servis edilir.",
+                                  "image": "https://images.deliveryhero.io/image/fd-tr/Products/73934913.jpg",
+                                  "price": 740,
+                                  "discounted_price": 592,
+                                  "is_sold_out": false
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "cached": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ],
+                      "example": false
+                    },
+                    "source": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "example": "https://www.yemeksepeti.com/restaurant/frtm/x"
+                    },
+                    "pagination": {
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "total": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ],
+                          "example": 60
+                        },
+                        "limit": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ],
+                          "example": 30
+                        },
+                        "offset": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ],
+                          "example": 0
+                        },
+                        "count": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ],
+                          "example": 30
+                        },
+                        "has_more": {
+                          "type": [
+                            "boolean",
+                            "null"
+                          ],
+                          "example": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/CreditLimitReached"
+          },
+          "403": {
+            "$ref": "#/components/responses/AccountSuspended"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          },
+          "502": {
+            "$ref": "#/components/responses/UpstreamFailed"
+          }
+        }
+      }
+    },
+    "/restaurants": {
+      "get": {
+        "operationId": "restaurants",
+        "summary": "Restaurant discovery",
+        "description": "List and filter restaurants delivering to a location (by city or lat/lng). Filter by cuisine (id or name) and sort; paginated.",
+        "x-credits": 1,
+        "parameters": [
+          {
+            "name": "city",
+            "in": "query",
+            "required": false,
+            "description": "City to deliver to (ignored if lat/lng are given).",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "istanbul",
+                "ankara",
+                "izmir",
+                "bursa",
+                "antalya",
+                "adana",
+                "gaziantep",
+                "konya"
+              ],
+              "default": "istanbul"
+            },
+            "example": "istanbul"
+          },
+          {
+            "name": "lat",
+            "in": "query",
+            "required": false,
+            "description": "Latitude (overrides city).",
+            "schema": {
+              "type": "number"
+            },
+            "example": 41.0082
+          },
+          {
+            "name": "lng",
+            "in": "query",
+            "required": false,
+            "description": "Longitude (overrides city).",
+            "schema": {
+              "type": "number"
+            },
+            "example": 28.9784
+          },
+          {
+            "name": "cuisine",
+            "in": "query",
+            "required": false,
+            "description": "Filter by cuisine: a numeric cuisine id or a name (e.g. 'Burger', 'Pizza'). See available_cuisines in the response for valid values.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Burger"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "description": "Sort order for the results.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "",
+                "rating",
+                "delivery_time",
+                "distance",
+                "minimum_order_amount"
+              ]
+            },
+            "example": "rating"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Page size (max 60).",
+            "schema": {
+              "type": "integer",
+              "default": 30
+            },
+            "example": 30
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "description": "Items to skip.",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            },
+            "example": 0
+          },
+          {
+            "name": "refresh",
+            "in": "query",
+            "required": false,
+            "description": "Bypass and repopulate the cache.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "example": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The data, as JSON.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "restaurants": {
+                          "type": [
+                            "array",
+                            "null"
+                          ],
+                          "items": {
+                            "type": "object",
+                            "example": {
+                              "code": "frtm",
+                              "id": 272240,
+                              "name": "Helvacı Ali",
+                              "rating": 3.9,
+                              "review_count": 205,
+                              "cuisines": [
+                                "Tatlı"
+                              ],
+                              "primary_cuisine": "Tatlı",
+                              "budget": 1,
+                              "address": "Hasfırın Cd. 13/B",
+                              "city": "Istanbul",
+                              "latitude": 41.043,
+                              "longitude": 29.006,
+                              "distance_km": 3.862,
+                              "minimum_order_amount": 0,
+                              "delivery_fee": 0,
+                              "delivery_time_minutes": 30,
+                              "currency": "TRY",
+                              "is_delivery_available": true,
+                              "is_pickup_available": false,
+                              "is_open": true,
+                              "has_online_payment": false,
+                              "has_discount": true,
+                              "logo": null,
+                              "hero_image": "https://images.deliveryhero.io/image/fd-tr/LH/frtm-listing.jpg",
+                              "url": "https://www.yemeksepeti.com/restaurant/frtm/helvaci-ali-frtm"
+                            }
+                          }
+                        },
+                        "total": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ],
+                          "description": "Total restaurants available at the location (source count).",
+                          "example": 2285
+                        },
+                        "count": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ],
+                          "example": 30
+                        },
+                        "location": {
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "example": {
+                            "latitude": 41.0082,
+                            "longitude": 28.9784,
+                            "city": "istanbul"
+                          }
+                        },
+                        "cuisine_filter": {
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "example": {
+                            "input": "Burger",
+                            "resolved_id": "1058"
+                          }
+                        },
+                        "sort": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "example": "rating"
+                        },
+                        "available_cuisines": {
+                          "type": [
+                            "array",
+                            "null"
+                          ],
+                          "items": {
+                            "type": "object"
+                          },
+                          "example": [
+                            {
+                              "id": 1058,
+                              "name": "Burger",
+                              "count": 42
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "cached": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ],
+                      "example": false
+                    },
+                    "source": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "example": "yemeksepeti:disco"
+                    },
+                    "pagination": {
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "total": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ],
+                          "example": 60
+                        },
+                        "limit": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ],
+                          "example": 30
+                        },
+                        "offset": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ],
+                          "example": 0
+                        },
+                        "count": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ],
+                          "example": 30
+                        },
+                        "has_more": {
+                          "type": [
+                            "boolean",
+                            "null"
+                          ],
+                          "example": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/CreditLimitReached"
+          },
+          "403": {
+            "$ref": "#/components/responses/AccountSuspended"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          },
+          "502": {
+            "$ref": "#/components/responses/UpstreamFailed"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "maviapiKey": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Your maviapi API key, sent as `Authorization: Bearer <key>`. Create one at https://maviapi.com/dashboard/keys."
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "required": [
+          "error",
+          "message"
+        ],
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Machine-readable code, e.g. `rate_limited`."
+          },
+          "message": {
+            "type": "string",
+            "description": "What went wrong, in a sentence."
+          }
+        }
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "A parameter is missing or cannot be used.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "error": "bad_request",
+              "message": "Missing required query parameter: q"
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "No API key was sent, or the key is invalid or revoked (`missing_api_key`, `invalid_api_key`).",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "error": "missing_api_key",
+              "message": "Provide an API key via the Authorization: Bearer <key> header."
+            }
+          }
+        }
+      },
+      "CreditLimitReached": {
+        "description": "The plan's credits for this period are used up.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "error": "credit_limit_reached",
+              "message": "You've used all 5,000 credits in your Trial plan for this period. Upgrade your plan for a higher allotment."
+            }
+          }
+        }
+      },
+      "AccountSuspended": {
+        "description": "The account that owns the key is suspended.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "error": "account_banned",
+              "message": "Your account is suspended."
+            }
+          }
+        }
+      },
+      "RateLimited": {
+        "description": "Too many requests for this key. Wait the number of seconds in `Retry-After`.",
+        "headers": {
+          "Retry-After": {
+            "description": "Seconds to wait before retrying.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "error": "rate_limited",
+              "message": "Rate limit exceeded for this API key."
+            }
+          }
+        }
+      },
+      "UpstreamFailed": {
+        "description": "The source site could not be read this time. Retrying later usually works.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "error": "scrape_failed",
+              "message": "The upstream source could not be fetched"
+            }
+          }
+        }
+      }
+    }
+  }
+}

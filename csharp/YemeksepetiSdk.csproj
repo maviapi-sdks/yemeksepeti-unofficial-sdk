@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>YemeksepetiSdk</RootNamespace>
+    <Version>0.1.0</Version>
+    <Description>Unofficial Yemeksepeti API client</Description>
+    <RepositoryUrl>https://github.com/maviapi-sdks/yemeksepeti-unofficial-sdk</RepositoryUrl>
+  </PropertyGroup>
+</Project>

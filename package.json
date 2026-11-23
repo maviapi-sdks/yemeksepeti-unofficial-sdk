@@ -1,0 +1,32 @@
+{
+  "name": "yemeksepeti-unofficial-sdk",
+  "version": "0.1.0",
+  "description": "Unofficial Yemeksepeti API client",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./javascript/index.d.ts",
+      "default": "./javascript/index.js"
+    }
+  },
+  "types": "./javascript/index.d.ts",
+  "files": [
+    "javascript"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "yemeksepeti",
+    "yemeksepeti-api",
+    "unofficial",
+    "sdk",
+    "maviapi"
+  ],
+  "homepage": "https://maviapi.com/apis/yemeksepeti",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maviapi-sdks/yemeksepeti-unofficial-sdk.git"
+  },
+  "license": "MIT"
+}
