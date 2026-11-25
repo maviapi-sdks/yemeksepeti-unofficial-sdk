@@ -963,7 +963,7 @@
             },
             "example": {
               "error": "credit_limit_reached",
-              "message": "You've used all 5,000 credits in your Trial plan for this period. Upgrade your plan for a higher allotment."
+              "message": "You've used all 1,000 credits in your Free plan for this period. Upgrade your plan for a higher allotment."
             }
           }
         }
