@@ -42,7 +42,7 @@ export class YemeksepetiClient {
    *
    * Each successful request uses 10 credits.
    */
-  restaurantCode(params) {
+  restaurantByCode(params) {
     return this.request("/restaurant/{code}", params, ["code"]);
   }
 

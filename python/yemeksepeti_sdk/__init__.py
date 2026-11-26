@@ -72,7 +72,7 @@ class YemeksepetiClient:
         """
         return self._get("/explore", {"city": city, "lat": lat, "lng": lng, "cuisine": cuisine, "sort": sort, "menu": menu, "menuCount": menuCount, "limit": limit, "offset": offset, "refresh": refresh})
 
-    def restaurant_code(self, *, code: str, limit: Optional[int] = None, offset: Optional[int] = None, refresh: Optional[bool] = None) -> Dict[str, Any]:
+    def restaurant_by_code(self, *, code: str, limit: Optional[int] = None, offset: Optional[int] = None, refresh: Optional[bool] = None) -> Dict[str, Any]:
         """
         Full menu of one restaurant by vendor code: categories, products, descriptions,
         images and prices (TRY, incl. discounts).

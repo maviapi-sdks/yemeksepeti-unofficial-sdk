@@ -53,7 +53,7 @@ export interface ExploreParams {
   "refresh"?: boolean;
 }
 
-export interface RestaurantCodeParams {
+export interface RestaurantByCodeParams {
   /**
    * Restaurant vendor code (the `code` field from /restaurants, e.g. 'frtm'). Path
    * parameter
@@ -145,7 +145,7 @@ export declare class YemeksepetiClient {
    *   offset (integer)
    *   refresh (boolean): Bypass and repopulate the cache
    */
-  restaurantCode(params: RestaurantCodeParams): Promise<Record<string, any>>;
+  restaurantByCode(params: RestaurantByCodeParams): Promise<Record<string, any>>;
   /**
    * List and filter restaurants delivering to a location (by city or lat/lng). Filter by
    * cuisine (id or name) and sort; paginated.

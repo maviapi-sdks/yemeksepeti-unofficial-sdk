@@ -66,7 +66,7 @@ module YemeksepetiSdk
     #   limit (integer): Max categories per page
     #   offset (integer)
     #   refresh (boolean): Bypass and repopulate the cache
-    def restaurant_code(**params)
+    def restaurant_by_code(**params)
       get("/restaurant/{code}", params, %w[code])
     end
 

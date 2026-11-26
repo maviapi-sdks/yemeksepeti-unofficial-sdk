@@ -79,7 +79,7 @@ class YemeksepetiClient
      *
      * @return array<string, mixed>
      */
-    public function restaurantCode(string $code, ?int $limit = null, ?int $offset = null, ?bool $refresh = null): array
+    public function restaurantByCode(string $code, ?int $limit = null, ?int $offset = null, ?bool $refresh = null): array
     {
         return $this->get('/restaurant/{code}', ['code' => $code, 'limit' => $limit, 'offset' => $offset, 'refresh' => $refresh]);
     }

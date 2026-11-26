@@ -87,7 +87,7 @@ func (c *Client) Explore(ctx context.Context, params Params) (json.RawMessage, e
 	return c.get(ctx, "/explore", params)
 }
 
-// RestaurantCode: Full menu of one restaurant by vendor code: categories, products, descriptions,
+// RestaurantByCode: Full menu of one restaurant by vendor code: categories, products, descriptions,
 // images and prices (TRY, incl. discounts).
 //
 // Each successful request uses 10 credits.
@@ -99,7 +99,7 @@ func (c *Client) Explore(ctx context.Context, params Params) (json.RawMessage, e
 //   - limit (integer): Max categories per page
 //   - offset (integer)
 //   - refresh (boolean): Bypass and repopulate the cache
-func (c *Client) RestaurantCode(ctx context.Context, params Params) (json.RawMessage, error) {
+func (c *Client) RestaurantByCode(ctx context.Context, params Params) (json.RawMessage, error) {
 	return c.get(ctx, "/restaurant/{code}", params, "code")
 }
 

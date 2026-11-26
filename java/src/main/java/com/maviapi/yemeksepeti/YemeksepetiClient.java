@@ -97,7 +97,7 @@ public class YemeksepetiClient {
      *   offset (integer)
      *   refresh (boolean): Bypass and repopulate the cache
      */
-    public String restaurantCode(Map<String, Object> params) {
+    public String restaurantByCode(Map<String, Object> params) {
         return get("/restaurant/{code}", params, "code");
     }
 

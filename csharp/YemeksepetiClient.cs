@@ -72,7 +72,7 @@ public class YemeksepetiClient
     //   limit (integer): Max categories per page
     //   offset (integer)
     //   refresh (boolean): Bypass and repopulate the cache
-    public Task<JsonElement> RestaurantCodeAsync(IDictionary<string, object?> parameters, CancellationToken cancellationToken = default) =>
+    public Task<JsonElement> RestaurantByCodeAsync(IDictionary<string, object?> parameters, CancellationToken cancellationToken = default) =>
         GetAsync("/restaurant/{code}", parameters, cancellationToken, "code");
 
     // List and filter restaurants delivering to a location (by city or lat/lng). Filter by
